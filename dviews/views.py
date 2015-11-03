@@ -9,7 +9,7 @@ def slack(request):
 
     result_num = 5
     exact = False
-    query = request
+    #query = request
     result = {"attachments":[{}]}
     query = request.POST.dict()
     #comment above and uncomment below for test case
@@ -89,7 +89,7 @@ def slack(request):
     except TypeError:
         result['text'] = name +" did find no matches " + querystr
     #print(result)
-    return result
+    #return result
     return HttpResponse(json.JSONEncoder().encode(result))
     return render(request.POST, 'index.html')
 
