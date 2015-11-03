@@ -85,7 +85,7 @@ def slack(request):
                 pos = 0
                 result['attachments'][0]['fields'] =[]
                 for item in obj["items"]["results"]:
-                    print (result)
+                    #print (result)
                     result['attachments'][0]['fields'].append({"title":item["name"],"value":'<'+ item["url_xivdb"]  +'|Link> ' +item["help"]})
                     pos = pos + 1
                     if pos == result_num:
