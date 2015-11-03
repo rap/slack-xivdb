@@ -64,7 +64,7 @@ def slack(request):
             result['attachments'][0]['title_link'] = item["url_xivdb"] 
         elif obj["items"]["total"] > 1:
             #print('hit')
-            if exact:
+            if exact == True:
                 for item in obj['items']['results']:
                     if item['name'].lower() == exactstr.lower():
                         result['text']= 'Memeroon finds this item matches ' + querystr + 'exactly'
@@ -74,12 +74,12 @@ def slack(request):
                         result['attachments'][0]['thumb_url'] = item["icon"] 
                         result['attachments'][0]['title_link'] = item["url_xivdb"] 
 
-                if result not in locals():
+                if len(result["attachments"]) == 0:
                     result['text'] = name +" did find no matches " + querystr
                     #print item['name'].lower()
                     #print exactstr.lower()
             else:
-                resulst['text']= 'Memeroon finds ' + str(obj["items"]["total"]) +' items matches ' + querystr 
+                result['text']= 'Memeroon finds ' + str(obj["items"]["total"]) +' items matches ' + querystr 
                 if obj["items"]["total"] > result_num:
                     result['text'] = result['text'] + ", shows first " + str(result_num) 
                 pos = 0
