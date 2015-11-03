@@ -24,8 +24,8 @@ def slack(request):
         arraystr = querystr.split()
         if arraystr[0].lower() == '-help':
             result['text'] = ('Memeroon can helps in following ways!\n' 
-                'Give Memeroon item name and Memeroon tries best to finds.\Memeroon' 
-                'n knows these trickys at a start\n' 
+                'Give Memeroon item name and Memeroon tries best to finds.\n'
+                'Memeroon knows these trickys at a start\n' 
                 '-exact and Memeroon only gives exact match!  \n' 
                 '-results and Memeroon will give that many! Mememroon doesn\'t think you should pick a big one... \n'
                 '-help and Memeroon will explains again.')
