@@ -74,7 +74,7 @@ def slack(request):
                         result['attachments'][0]['thumb_url'] = item["icon"] 
                         result['attachments'][0]['title_link'] = item["url_xivdb"] 
 
-                if len(result["attachments"][]) == 0:
+                if 'text' not in result["attachments"][0]:
                     result['text'] = name +" did find no matches " + querystr
                     #print item['name'].lower()
                     #print exactstr.lower()
