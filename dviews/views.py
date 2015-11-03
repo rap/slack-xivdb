@@ -89,7 +89,7 @@ def slack(request):
                         break
     except TypeError:
         result['text'] = "Memeroon did find no matches " + querystr
-    #print(json.JSONEncoder().encode(result))
+    print(json.JSONEncoder().encode(result))
     #return result
     return HttpResponse(json.JSONEncoder().encode(result))
     return render(request.POST, 'index.html')
