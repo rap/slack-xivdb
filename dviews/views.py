@@ -14,7 +14,7 @@ def slack(request):
     query = request.POST.dict()
     #comment above and uncomment below for test case
     querystr = query['text']
-    print(query)
+    #print(query)
     if querystr == False:
         return HttpResponse("Couldn't find key text in POST:" + ''.join(request.body.items()) + " or GET:" + ''.join(request.body.items()))
         return render(request.POST, 'index.html')
@@ -23,15 +23,15 @@ def slack(request):
     while querystr[:1] == '-':
         arraystr = querystr.split()
         if arraystr[0].lower() == '-help':
-            result['text'] = (name +' can helps in following ways!\n' 
-                'give ' +name + ' item name and ' +name + 'tries best to finds.\n' 
-                + name + 'knows these trickys at a start\n' 
-                '-exact and ' + name + 'only gives exact match!  \n' 
-                '-results and ' +name+ 'will give that many! ' +name + 'doesn\'t think you should pick a big one... \n'
-                '-help and ' +name+ 'will explains again.')
+            result['text'] = ('Memeroon can helps in following ways!\n' 
+                'give Memeroon item name and Memeroon tries best to finds.\n' 
+                ' Memeroon knows these trickys at a start\n' 
+                '-exact and Memeroon only gives exact match!  \n' 
+                '-results and Memeroon will give that many! Mememroon doesn\'t think you should pick a big one... \n'
+                '-help and Memeroon will explains again.')
             return HttpResponse(json.JSONEncoder().encode(result))        
         if len(arraystr) == 1:
-            result['text']= name +'can\'t help with '+ arraystr[0][1:] +' if you not tell what to do!'
+            result['text']= 'Mememroon can\'t help with '+ arraystr[0][1:] +' if you not tell what to do!'
             return HttpResponse(json.JSONEncoder().encode(result))        
         if arraystr[0].lower() == '-exact':
             exact = True
@@ -41,20 +41,20 @@ def slack(request):
                 result_num = int(arraystr[1])
                 querystr = querystr[len(arraystr[0])+len(arraystr[1])+2:]
             else:
-                result['text']= name +' no can count to ' +str(arraystr[1]) +'!'
+                result['text']= 'Memeroon no can count to ' +str(arraystr[1]) +'!'
                 return HttpResponse(json.JSONEncoder().encode(result))
 
     if len(querystr) < 1:
-        result['text']= name +' no can match nothing! You expect miracle from ' + name + '!'
+        result['text']= 'Memeroon no can match nothing! You expect miracle from Memeroon!'
         return HttpResponse(json.JSONEncoder().encode(result))
     #print(querystr)
     r = requests.get('http://api.xivdb.com/search?string=' + querystr )
     obj = r.json()
-    print(r.text)
+    #print(r.text)
     try:
         if obj["items"]["total"] == '1':
             item = obj["items"]["results"].pop()  
-            result['text']= name +' finds this item matches ' + querystr
+            result['text']= 'Memeroon finds this item matches ' + querystr
             if exact:
                 result['text'] += ' exactly'
             result['attachments'][0]['title'] = item["name"] 
@@ -66,7 +66,7 @@ def slack(request):
             if exact:
                 for item in obj['items']['results']:
                     if item['name'].lower() == exactstr.lower():
-                        result['text']= name +' finds this item matches ' + querystr + 'exactly'
+                        result['text']= 'Memeroon finds this item matches ' + querystr + 'exactly'
                         result['attachments'][0]['title'] = item["name"] 
                         result['attachments'][0]['text'] = item["help"]
                         result['attachments'][0]['fallback'] = item["name"] + item["help"]
@@ -77,7 +77,7 @@ def slack(request):
                     #print item['name'].lower()
                     #print exactstr.lower()
             else:
-                resulst['text']= name +' finds ' + str(obj["items"]["total"]) +' items matches ' + querystr 
+                resulst['text']= 'Memeroon finds ' + str(obj["items"]["total"]) +' items matches ' + querystr 
                 if obj["items"]["total"] > result_num:
                     result['text'] = result['text'] + ", shows first " + str(result_num) 
                 pos = 0
@@ -88,8 +88,8 @@ def slack(request):
                     if pos == result_num:
                         break
     except TypeError:
-        result['text'] = name +" did find no matches " + querystr
-    print(json.JSONEncoder().encode(result))
+        result['text'] = "Memeroon did find no matches " + querystr
+    #print(json.JSONEncoder().encode(result))
     #return result
     return HttpResponse(json.JSONEncoder().encode(result))
     return render(request.POST, 'index.html')
