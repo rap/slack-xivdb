@@ -24,8 +24,8 @@ def slack(request):
         arraystr = querystr.split()
         if arraystr[0].lower() == '-help':
             result['text'] = ('Memeroon can helps in following ways!\n' 
-                'give Memeroon item name and Memeroon tries best to finds.\n' 
-                ' Memeroon knows these trickys at a start\n' 
+                'Give Memeroon item name and Memeroon tries best to finds.\Memeroon' 
+                'n knows these trickys at a start\n' 
                 '-exact and Memeroon only gives exact match!  \n' 
                 '-results and Memeroon will give that many! Mememroon doesn\'t think you should pick a big one... \n'
                 '-help and Memeroon will explains again.')
@@ -50,7 +50,7 @@ def slack(request):
     #print(querystr)
     r = requests.get('http://api.xivdb.com/search?string=' + querystr )
     obj = r.json()
-    print(r.text)
+    #print(r.text)
     try:
         if obj["items"]["total"] == '1':
             item = obj["items"]["results"].pop()  
@@ -63,7 +63,7 @@ def slack(request):
             result['attachments'][0]['thumb_url'] = item["icon"] 
             result['attachments'][0]['title_link'] = item["url_xivdb"] 
         elif obj["items"]["total"] > 1:
-            print('hit')
+            #print('hit')
             if exact:
                 for item in obj['items']['results']:
                     if item['name'].lower() == exactstr.lower():
@@ -73,6 +73,7 @@ def slack(request):
                         result['attachments'][0]['fallback'] = item["name"] + item["help"]
                         result['attachments'][0]['thumb_url'] = item["icon"] 
                         result['attachments'][0]['title_link'] = item["url_xivdb"] 
+
                 if result not in locals():
                     result['text'] = name +" did find no matches " + querystr
                     #print item['name'].lower()
@@ -84,6 +85,7 @@ def slack(request):
                 pos = 0
                 result['attachments'][0]['fields'] =[]
                 for item in obj["items"]["results"]:
+                    print (result)
                     result['attachments'][0]['fields'].append({"title":item["name"], "title_link":item["url_xivdb"],"value":item["help"][:30]+"..."})
                     pos = pos + 1
                     if pos == result_num:
