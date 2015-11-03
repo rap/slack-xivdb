@@ -67,7 +67,7 @@ def slack(request):
             if exact == True:
                 for item in obj['items']['results']:
                     if item['name'].lower() == querystr.lower():
-                        result['text']= 'Memeroon finds this item matches ' + querystr + 'exactly'
+                        result['text']= 'Memeroon finds this item matches ' + querystr + ' exactly'
                         result['attachments'][0]['title'] = item["name"] 
                         result['attachments'][0]['text'] = item["help"]
                         result['attachments'][0]['fallback'] = item["name"] + item["help"]
@@ -86,13 +86,13 @@ def slack(request):
                 result['attachments'][0]['fields'] =[]
                 for item in obj["items"]["results"]:
                     print (result)
-                    result['attachments'][0]['fields'].append({"title":item["name"],"value":'<'+ item["url_xivdb"]  +'|Link> ' +item["help"][:30]+"..."})
+                    result['attachments'][0]['fields'].append({"title":item["name"],"value":'<'+ item["url_xivdb"]  +'|Link> ' +item["help"]})
                     pos = pos + 1
                     if pos == result_num:
                         break
     except TypeError:
         result['text'] = "Memeroon did find no matches " + querystr
-    print(json.JSONEncoder().encode(result))
+    #print(json.JSONEncoder().encode(result))
     #return result
     return HttpResponse(json.JSONEncoder().encode(result))
     return render(request.POST, 'index.html')
