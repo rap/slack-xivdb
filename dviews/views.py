@@ -88,7 +88,7 @@ def slack(request):
                         break
     except TypeError:
         result['text'] = name +" did find no matches " + querystr
-    #print(result)
+    print(json.JSONEncoder().encode(result))
     #return result
     return HttpResponse(json.JSONEncoder().encode(result))
     return render(request.POST, 'index.html')
