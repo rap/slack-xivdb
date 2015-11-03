@@ -66,7 +66,7 @@ def slack(request):
             #print('hit')
             if exact == True:
                 for item in obj['items']['results']:
-                    if item['name'].lower() == exactstr.lower():
+                    if item['name'].lower() == querystr.lower():
                         result['text']= 'Memeroon finds this item matches ' + querystr + 'exactly'
                         result['attachments'][0]['title'] = item["name"] 
                         result['attachments'][0]['text'] = item["help"]
@@ -74,7 +74,7 @@ def slack(request):
                         result['attachments'][0]['thumb_url'] = item["icon"] 
                         result['attachments'][0]['title_link'] = item["url_xivdb"] 
 
-                if len(result["attachments"]) == 0:
+                if len(result["attachments"][]) == 0:
                     result['text'] = name +" did find no matches " + querystr
                     #print item['name'].lower()
                     #print exactstr.lower()
@@ -86,7 +86,7 @@ def slack(request):
                 result['attachments'][0]['fields'] =[]
                 for item in obj["items"]["results"]:
                     print (result)
-                    result['attachments'][0]['fields'].append({"title":item["name"], "title_link":item["url_xivdb"],"value":item["help"][:30]+"..."})
+                    result['attachments'][0]['fields'].append({"title":item["name"],"value":'<'+ item["url_xivdb"]  +'|Link> ' +item["help"][:30]+"..."})
                     pos = pos + 1
                     if pos == result_num:
                         break
