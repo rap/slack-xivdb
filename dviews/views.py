@@ -50,7 +50,7 @@ def slack(request):
     #print(querystr)
     r = requests.get('http://api.xivdb.com/search?string=' + querystr )
     obj = r.json()
-    #print(r.text)
+    print(r.text)
     try:
         if obj["items"]["total"] == '1':
             item = obj["items"]["results"].pop()  
@@ -63,6 +63,7 @@ def slack(request):
             result['attachments'][0]['thumb_url'] = item["icon"] 
             result['attachments'][0]['title_link'] = item["url_xivdb"] 
         elif obj["items"]["total"] > 1:
+            print('hit')
             if exact:
                 for item in obj['items']['results']:
                     if item['name'].lower() == exactstr.lower():
