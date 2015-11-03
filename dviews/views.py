@@ -13,7 +13,8 @@ def slack(request):
     result = {"attachments":[{}]}
     query = request.POST.dict()
     #comment above and uncomment below for test case
-    #querystr = query['text']
+    querystr = query['text']
+    print(query)
     if querystr == False:
         return HttpResponse("Couldn't find key text in POST:" + ''.join(request.body.items()) + " or GET:" + ''.join(request.body.items()))
         return render(request.POST, 'index.html')
@@ -49,7 +50,7 @@ def slack(request):
     #print(querystr)
     r = requests.get('http://api.xivdb.com/search?string=' + querystr )
     obj = r.json()
-    #print(r.text)
+    print(r.text)
     try:
         if obj["items"]["total"] == '1':
             item = obj["items"]["results"].pop()  
